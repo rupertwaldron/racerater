@@ -1,0 +1,25 @@
+<% include ../partials/header %>
+
+       <div id="newSiteForm" class="container">
+            <h3 id="newSiteHeader">Edit User: <%= user.username %> </h3>
+            
+            <form action = "/users/<%= user._id %>?_method=PUT" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type = "text" name = "user[firstName]" value = "<%= user.firstName %>" required><br>
+                    <input class="form-control" type = "text" name = "user[lastName]" value= "<%= user.lastName %>" required><br>
+                    <input class="form-control" type = "url" name = "user[avatar]" value = "<%= user.avatar %>" required><br>
+                    <input class="form-control" type = "email" name = "user[email]" value = "<%= user.email %>" required><br>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update</button>
+            </form>
+            <br>
+            <a href="/users/<%= user._id %>">Go Back</a>
+        </div>
+        
+        <!--<form action="/register" method="POST">-->
+        <!--    <input type="text" name="username" placeholder="username" required>-->
+        <!--    <input type="password" name="password" placeholder="password" required>-->
+        <!--    <button type="submit">Register</button>-->
+        <!--</form>-->
+
+<% include ../partials/footer %>

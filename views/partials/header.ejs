@@ -40,14 +40,14 @@
 					    </li>
 					<% } else if (currentUser.isAdmin) { %>
 						<li class="nav-item">
-					        <a class="nav-link" href="#"><%= currentUser.username %> <i class="sysop fas fa-user"></i></a>
+					        <a class="nav-link" href="/users/<%= currentUser._id %>"><%= currentUser.username %> <i class="sysop fas fa-user"></i></a>
 					    </li>
 					    <li class="nav-item">
 					        <a class="nav-link" href="/Logout">Logout <i class="fas fa-user-minus"></i></a>
 					    </li>
 					<% } else { %>
 						<li class="nav-item">
-					        <a class="nav-link" href="#"><%= currentUser.username %> <i class="fas fa-user"></i></a>
+					        <a class="nav-link" href="/users/<%= currentUser._id %>"><%= currentUser.username %> <i class="fas fa-user"></i></a>
 					    </li>
 					    <li class="nav-item">
 					        <a class="nav-link" href="/Logout">Logout <i class="fas fa-user-minus"></i></a>
