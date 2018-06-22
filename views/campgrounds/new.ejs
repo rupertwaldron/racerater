@@ -1,0 +1,25 @@
+<% include ../partials/header %>
+
+
+
+        <div id="newSiteForm" class="container">
+            <h3 id="newSiteHeader">Add a New Campsite</h3>
+            
+            <form action = "/campgrounds" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type = "text" name = "newCampName" placeholder = "Add new camp"><br>
+                    <input class="form-control" type = "url" name = "newCampImageUrl" placeholder = "Image url"><br>
+                    <input class="form-control" type = "number" name = "newCampPrice" placeholder = "Price £" min="0.01" step="0.01"><br>
+                    <input class="form-control" type = "text" name = "newlat" placeholder = "Latitude"><br>
+                    <input class="form-control" type = "text" name = "newlong" placeholder = "Longitude"><br>
+                    <input class="form-control" type = "text" name = "newdescription" placeholder = "Description"><br>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+            <br>
+            <a href="/campgrounds">Go Back</a>
+        </div>
+
+
+
+<% include ../partials/footer %>

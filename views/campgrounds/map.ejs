@@ -1,0 +1,60 @@
+<% include ../partials/header %>
+
+<head>
+<meta charset="UTF-8">
+<title>Geolocation Application</title>
+<!--<script src="geolocation.js"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+</head>
+
+    
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1><%= name %></h1>
+            <p>This map of your camp site</p>
+            <p>
+                <a class="btn btn-primary btn-large" href="/index">Back to results</a>
+            </p>
+        </div>
+    </header>
+    
+    <p id="msg" style="width:450px;height:50px"> </p>
+    <p id="map" style="width:450px;height:450px"> </p>
+    
+    <script>
+        // function init()
+        // {
+        //   if( navigator.geolocation )
+        //   { 
+        //     document.getElementById( "msg" ).innerHTML = "Geolocation service is trying to find you..." ;
+        //     navigator.geolocation.getCurrentPosition( success , fail ) ;
+        //   }
+        //   else { document.getElementById( "msg" ).innerHTML = "Your browser does not support Geolocation service" ; }
+        // }
+        // document.addEventListener( "DOMContentLoaded" , init , false ) ;
+        
+        // function fail( position )
+        // {
+        //   document.getElementById( "msg" ).innerHTML = "Geolocation service cannot find you at this time." ;
+        // }
+        
+        // function success( position )
+        // {
+        //   var latHome = position.coords.latitude ;
+        //   var lngHome = position.coords.longitude ;
+        //   document.getElementById( "msg" ).innerHTML = "Found you at...<br>Latitude: " + latHome + " , Longitude: " + lngHome ;
+        
+        //   var latlngHome = new google.maps.LatLng( latHome , lngHome ) ;
+          var latlngCamp = new google.maps.LatLng(<%= coordinates.lat %>, <%= coordinates.long %>)
+          var options = { zoom: 14, center: latlngCamp , mapTypeId: google.maps.MapTypeId.HYBRID } ;
+          var map = new google.maps.Map( document.getElementById( "map" ) , options ) ;
+        //   var marker = new google.maps.Marker( { position: latlngHome , map: map , title:"You are here" } ) ;
+          var campsite = new google.maps.Marker( { position: latlngCamp , map: map , title: "<%= name %>" } ) ;
+    </script>
+    
+
+    
+</div>
+<% include ../partials/footer %>

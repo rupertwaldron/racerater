@@ -1,0 +1,98 @@
+<% include ../partials/header %>
+
+<head>
+<meta charset="UTF-8">
+<title>Geolocation Application</title>
+<!--<script src="geolocation.js"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+</head>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Yelp Camp</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+            <p id="map" style="width:250px;height:250px"> </p>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="<%= campground.image %>" alt="Card image cap">
+                     <div class="card-title">
+                                <strong style="font-size: 2em;"><a><%= campground.name %></a></strong>
+                                <span class="float-right text-muted">£<%= campground.price %>/night</span>
+                                
+                    </div>
+                    <p class="card-text"><%= campground.description %></p>
+                    <p class="card-text">
+                        <em>Submitted by: <a href="/users/<%= campground.author.id %>"><%= campground.author.username %></a>, <%= moment(campground.createdAt).fromNow() %></em>
+                    </p>
+                    <% if(currentUser) { %>
+                        <% if (campground.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
+                            <p>
+                                <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                                    <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                                    <button  type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </p>
+                        <% } %>
+                    <% } %>
+                </div>
+            
+                <div class="card-footer">
+                     <div class="text-right">
+                        <a class="btn btn-success btn-large" href="/campgrounds/<%= campground._id %>/comments/new">Comment on this campsite</a>
+                    </div>
+                    <hr>
+                    <small class="text-muted">
+                        <% for (let comment of campground.comments) { %>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong><%= comment.author.username %></strong>
+                                    <span class="float-right"><%= moment(comment.createdAt).fromNow() %></span>
+                                    <p><%= comment.text %></p>
+                                        <% if(currentUser) { %>
+                                            <% if (comment.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
+                                                <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                                    <a class="btn btn-sm btn-warning" 
+                                                        href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                                    <button  type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+                                          <% } %>
+                                        <% } %>
+                                </div>
+                            </div>
+                        <% } %>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    
+    
+   
+   
+     <p>
+        <a class="btn btn-primary btn-large" href="/campgrounds">Back to results</a>
+    </p>
+
+    <script>
+          var latlngCamp = new google.maps.LatLng(<%= campground.lat %>, <%= campground.long %>)
+          var options = { zoom: 14, center: latlngCamp , mapTypeId: google.maps.MapTypeId.HYBRID } ;
+          var map = new google.maps.Map( document.getElementById( "map" ) , options ) ;
+        //   var marker = new google.maps.Marker( { position: latlngHome , map: map , title:"You are here" } ) ;
+          var campsite = new google.maps.Marker( { position: latlngCamp , map: map , title: "<%= campground.name %>" } ) ;
+    </script>
+    
+
+    
+
+
+<% include ../partials/footer %>

@@ -1,0 +1,1 @@
+alert(coordinates.lat);

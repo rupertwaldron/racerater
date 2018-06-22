@@ -1,0 +1,54 @@
+/*body {*/
+/*    background-color: pink;*/
+/*}*/
+
+.card img {
+    width: 100%;
+}
+
+.card-body {
+    padding: 0;
+}
+
+nav {
+    margin-bottom: 10px;
+}
+
+/*.row {*/
+/*    text-align: center;*/
+/*}*/
+
+#map {
+    margin: auto;
+}
+
+#newSiteForm {
+    width: 25%;
+}
+
+#newSiteHeader {
+    text-align: center;
+    margin: 10px;
+}
+
+.card-img-top {
+    margin-bottom: 10px;
+    padding: 0;
+    width: 100%;
+}
+
+.card-title {
+    padding: 9px 9px 0 9px;
+}
+
+.card-text {
+    padding: 0 9px 9px 9px;
+}
+
+.bob {
+    display: inline;
+}
+
+.sysop {
+    color: red;
+}
