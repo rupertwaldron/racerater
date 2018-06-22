@@ -14,3 +14,10 @@ CREATE      /campgrounds/:id/comments                   POST
 EDIT        /campgrounds/:id/comments/:comment_id/edit  GET
 UPDATE      /campgrounds/:id/comments/:comment_id       PUT
 DESTROY     /campgrounds/:id/comments/:comment_id       DELETE
+
+==============users==============================
+NEW         /campgrounds/:id/comments/new               GET
+CREATE      /campgrounds/:id/comments                   POST
+EDIT        /campgrounds/:id/comments/:comment_id/edit  GET
+UPDATE      /campgrounds/:id/comments/:comment_id       PUT
+DESTROY     /campgrounds/:id/comments/:comment_id       DELETE
