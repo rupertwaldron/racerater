@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var passport = require('passport');
+var middleware = require('../middleware');
 
 
 router.get("/", function(req, res) {
@@ -65,8 +66,8 @@ router.get('/logout', (req, res) => {
 router.get("/users/:id", (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
         //eval(require('locus'));
-        if(err) {
-            req.flash('error', 'something went wrong with user');
+        if(err|| !foundUser) {
+            req.flash('error', "Can't find user");
             res.redirect("/");
         } else {
             res.render('users/show', {user: foundUser});
@@ -76,13 +77,13 @@ router.get("/users/:id", (req, res) => {
 
 
 //EDIT USER PROFILE ROUTE
-router.get("/users/:id/edit", (req, res) => {
+router.get("/users/:id/edit", middleware.checkUserOwnership, (req, res) => {
     // Check which user is logged in
     // Update user
     // Render the show user page
     User.findById(req.params.id, (err, foundUser) => {
-        if(err) {
-            req.flash('error', 'something went wrong with user');
+        if(err || !foundUser) {
+            req.flash('error', "Can't find user");
             res.redirect("/");
         } else {
             res.render('users/edit', {user: foundUser});
@@ -94,11 +95,11 @@ router.get("/users/:id/edit", (req, res) => {
 
 //UPDATE USER ROUTE
 
-router.put("/users/:id", (req, res) => {
+router.put("/users/:id", middleware.checkUserOwnership, (req, res) => {
     console.log("From the put: " + req.body.user);
     User.findByIdAndUpdate(req.params.id, req.body.user, (err, updatedUser) => {
-        if(err) {
-            req.flash('error', err.message);
+        if(err || !updatedUser) {
+            req.flash('error', "Can't find user");
             res.redirect("/users" + req.params.id);
         } else {
             req.flash('success', 'We just updated ' + updatedUser.username + ' in the DB');

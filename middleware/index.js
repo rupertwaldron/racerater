@@ -1,5 +1,6 @@
 var Campground = require('../models/campground');
-var Comment= require('../models/comment');
+var Comment = require('../models/comment');
+var User = require('../models/user');
 //all middleware goes here
 var middlewareObj = {};
 
@@ -42,6 +43,32 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
                 console.log(req.user);
                 // let author and user 'rup' edit and delete
                 if(comment.author.id.equals(req.user._id) || req.user.isAdmin) {
+                    req.flash('success', "Authorization Accepted! ");
+                    next(); //next means it will go onto the callback
+                } else {
+                    res.redirect('back');
+                }
+            }
+        });
+    } else {
+        req.flash('error', "Authorization Denied! ");
+        res.redirect('back'); //takes user back to previous page
+    }
+}
+
+middlewareObj.checkUserOwnership = function(req, res, next) {
+    if(req.isAuthenticated()) { // check if user is logged in
+        User.findById(req.params.id, (err, user) => {
+            //eval(require('locus'));
+             if(err || !user) {
+                req.flash('error', 'User error');
+                res.redirect('back');
+            } else {
+                // need to use .equals as one is string an the other an object
+                console.log(user.id);
+                console.log(req.user);
+                // let author and user 'rup' edit and delete
+                if((user.id == req.user._id) || req.user.isAdmin) {
                     req.flash('success', "Authorization Accepted! ");
                     next(); //next means it will go onto the callback
                 } else {

@@ -9,7 +9,13 @@
                     <div class='caption'><a href='mailto:<%= user.email %>'><%= user.email %></a></div>
                 </div>
             </div>
-            <a class="btn btn-sm btn-warning" href="/users/<%= user._id %>/edit">Edit</a>
+            <% if(currentUser) { %>
+                <% if ((user.id == currentUser._id) || currentUser.isAdmin) { %>
+                    <p>
+                        <a class="btn btn-sm btn-warning" href="/users/<%= user._id %>/edit">Edit</a>
+                    </p>
+                <% } %>
+            <% } %>
     </div>
  <a href="/">Go Back</a>
 
