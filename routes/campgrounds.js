@@ -7,16 +7,28 @@ var moment = require('moment');
 
 //campgrounds - Displays all the campsites
 router.get("/", (req, res) => {
-    Campground.find({}, (err, AllCampgrounds) => {
-        if(err) {
-            req.flash('error', err.message);
-        } else {
-            res.render("campgrounds/index", {
-                campgrounds: AllCampgrounds
-            });
-        }
-    });
-//   res.render("campgrounds", {campgrounds: campgrounds}); 
+    if(req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+         Campground.find({"name": regex}, (err, foundCampgrounds) => {
+            if(err) {
+                req.flash('error', err.message);
+            } else {
+                res.render("campgrounds/index", {
+                    campgrounds: foundCampgrounds
+                });
+            }
+         });
+    } else {
+        Campground.find({}, (err, AllCampgrounds) => {
+            if(err) {
+                req.flash('error', err.message);
+            } else {
+                res.render("campgrounds/index", {
+                    campgrounds: AllCampgrounds
+                });
+            }
+        });
+    }
 });
 
 //NEW - Displays a form for a new campsite
@@ -106,5 +118,9 @@ router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
         }
     })
 });
-    
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 module.exports = router;
