@@ -48,7 +48,7 @@ router.post('/register', (req, res) => {
         username: req.body.username,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: req.body.avatar,
+        //avatar: 'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
         email: req.body.email,
     });
     //eval(require('locus')); // stops at this point and checks variables
