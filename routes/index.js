@@ -52,7 +52,7 @@ router.post('/register', (req, res) => {
         email: req.body.email,
     });
     //eval(require('locus')); // stops at this point and checks variables
-    if(req.body.adminCode === 'Ruppy_Rup') {
+    if(req.body.adminCode === process.env.SYSADMIN) {
         newUser.isAdmin = true;
     }
     User.register(newUser, req.body.password, (err, user) => {
