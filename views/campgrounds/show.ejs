@@ -10,11 +10,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">Yelp Camp</p>
+            <p class="lead">Rate the <em>Race</em></p>
             <div class="list-group">
-                <li class="list-group-item active">Info 1</li>
-                <li class="list-group-item">Info 2</li>
-                <li class="list-group-item">Info 3</li>
+                <!--<li class="list-group-item active">Info 1</li>-->
+                <!--<li class="list-group-item">Info 2</li>-->
+                <!--<li class="list-group-item">Info 3</li>-->
             </div>
             <p id="map" style="width:250px;height:250px"> </p>
         </div>
@@ -24,7 +24,7 @@
                     <img class="card-img-top" src="<%= campground.image %>" alt="Card image cap">
                      <div class="card-title">
                                 <strong style="font-size: 2em;"><a><%= campground.name %></a></strong>
-                                <span class="float-right text-muted">£<%= campground.price %>/night</span>
+                                <span class="float-right text-muted">£<%= campground.price %>/person</span>
                                 
                     </div>
                     <p class="card-text"><%= campground.description %></p>
@@ -45,7 +45,7 @@
             
                 <div class="card-footer">
                      <div class="text-right">
-                        <a class="btn btn-success btn-large" href="/campgrounds/<%= campground._id %>/comments/new">Comment on this campsite</a>
+                        <a class="btn btn-success btn-large" href="/campgrounds/<%= campground._id %>/comments/new">Comment on this race</a>
                     </div>
                     <hr>
                     <small class="text-muted">

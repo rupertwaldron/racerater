@@ -6,8 +6,6 @@ var middleware = require('../middleware');
 var multer = require('multer');
 var cloudinary = require('cloudinary');
 
-
-
 var storage = multer.diskStorage({
     filename: (req, file, callback) => {
         callback(null, Date.now() + file.originalname);
@@ -30,6 +28,7 @@ cloudinary.config({
 
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
 
 router.get("/", function(req, res) {
     res.render("landing");
