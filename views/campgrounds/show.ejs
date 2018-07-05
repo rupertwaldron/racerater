@@ -7,6 +7,15 @@
 <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 </head>
 
+    <% var sum = 0, count = 0 %>
+    <% for (let comment of campground.comments) { %>
+        <% if(comment.stars) { %>
+            <% sum += comment.stars %>  
+            <% count += 1 %>
+        <% } %>
+    <% } %>
+    <% var average = sum / count %>
+
 <div class="container">
     <div class="row">
         <div class="col-md-3">
@@ -24,6 +33,9 @@
                     <img class="card-img-top" src="<%= campground.image %>" alt="Card image cap">
                      <div class="card-title">
                                 <strong style="font-size: 2em;"><a><%= campground.name %></a></strong>
+                                <% for (let i = 0; i < average; i++) { %>
+                                    <i class="star fas fa-star"></i>
+                                <% } %>
                                 <span class="float-right text-muted">£<%= campground.price %>/person</span>
                                 
                     </div>
@@ -31,6 +43,7 @@
                     <p class="card-text">
                         <em>Submitted by: <a href="/users/<%= campground.author.id %>"><%= campground.author.username %></a>, <%= moment(campground.createdAt).fromNow() %></em>
                     </p>
+
                     <% if(currentUser) { %>
                         <% if (campground.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
                             <p>

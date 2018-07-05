@@ -23,13 +23,17 @@
     
     
     <div class="row">
-        <% campgrounds.forEach(function(campground) { %>
+        <% for (let campground of campgrounds) { %>
+            
             <div class="col-sm-6 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         
                         <img class="card-img-top" src="<%= campground.image %>" alt="Card image cap">
                         <h5 class="card-title"><%= campground.name %></h5>
+                        <% for (let i = 0; i < 2; i++) { %>
+                            <i class="star fas fa-star"></i>
+                        <% } %>
                         <!--<p class="card-text" style="text-align: center">This is a great campsite</p>-->
                         <!--<a href="/map" class="btn btn-primary">View Map</a>-->
                     
@@ -38,7 +42,7 @@
                     </div>
                 </div>
             </div>
-        <% }) %>
+        <% } %>
     </div>
     
 </div>   

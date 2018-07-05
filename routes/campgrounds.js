@@ -3,6 +3,7 @@ var router = express.Router();
 var Campground = require('../models/campground');
 var middleware = require('../middleware'); //will automatically grap the index.js file
 var moment = require('moment');
+var Comment= require('../models/comment');
 var multer = require('multer');
 var cloudinary = require('cloudinary');
 
