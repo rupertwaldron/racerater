@@ -27,7 +27,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
           req.flash('error', 'Error Finding Campground');
           res.redirect("/campgrounds");
         } else {
-            //console.log(req.body.comment);
+            console.log(req.body.comment);
             Comment.create(req.body.comment, (err, comment) => {
                 if(err || !comment) {
                     req.flash('error', 'Error Creating Comment');
@@ -68,7 +68,7 @@ router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => 
 
 //UPDATE COMMENT ROUTE
 router.put('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
-    console.log(req.params.comment_id + ' : ' + req.body.comment)
+    console.log(req.params.comment_id + ' : ' + req.body.comment.stars)
     // need to pass in the object not just the text (comment.text)
      Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
          if(err) {

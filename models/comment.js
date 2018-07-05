@@ -9,7 +9,8 @@ var commentSchema = new mongoose.Schema({
             ref: "User"
         },
         username: String
-    }
+    },
+    stars: { type: Number, min: 0, max: 5 }
 });
  
 module.exports = mongoose.model("Comment", commentSchema);
