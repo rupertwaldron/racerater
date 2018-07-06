@@ -46,7 +46,9 @@ router.get("/", (req, res) => {
             }
          });
     } else {
-        Campground.find({}, (err, AllCampgrounds) => {
+        //Campground.findById(req.params.id).populate("comments").exec((err, foundCampground) => {
+        //Campground.find({}, (err, AllCampgrounds) => {
+        Campground.find().populate("comments").exec((err, AllCampgrounds) => {
             if(err) {
                 req.flash('error', err.message);
             } else {
