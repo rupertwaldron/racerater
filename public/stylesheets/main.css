@@ -53,6 +53,14 @@ nav {
     color: red;
 }
 
-.star {
+.starTitle {
+    padding-bottom: 1em;
     color: orange;
+    vertical-align: middle;
+}
+
+.starComment {
+    padding-bottom: 0.2em;
+    color: orange;
+    vertical-align: middle;
 }

@@ -33,11 +33,13 @@
                     <img class="card-img-top" src="<%= campground.image %>" alt="Card image cap">
                      <div class="card-title">
                                 <strong style="font-size: 2em;"><a><%= campground.name %></a></strong>
-                                <% for (let i = 0; i < average; i++) { %>
-                                    <i class="star fas fa-star"></i>
-                                <% } %>
-                                <span class="float-right text-muted">£<%= campground.price %>/person</span>
-                                
+                               
+                                    <% for (let i = 0; i < average; i++) { %>
+                                        <i class="starTitle fas fa-star"></i>
+                                    <% } %>
+                              
+                               
+                                <span class="float-right text-muted">Entry £<%= campground.price %></span>
                     </div>
                     <p class="card-text"><%= campground.description %></p>
                     <p class="card-text">
@@ -67,7 +69,7 @@
                                 <div class="col-md-12">
                                     <strong><%= comment.author.username %></strong>
                                     <% for (let i = 0; i < comment.stars; i++) { %>
-                                             <i class="star fas fa-star"></i>
+                                             <i class="starComment fas fa-star"></i>
                                     <% } %>
                                     <span class="float-right"><%= moment(comment.createdAt).fromNow() %></span>
                                     <p><%= comment.text %></p>
