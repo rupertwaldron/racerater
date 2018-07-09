@@ -20,9 +20,11 @@ var indexRoutes         = require("./routes/index");
 var app = express();
 //need body parser to make an object from req.body
 app.use(bodyParser.urlencoded({extended: true}));
+
 // production database
 //mongoose.connect("mongodb://rupert:spiral8@ds131721.mlab.com:31721/racerater");
-mongoose.connect(process.env.DATABASEURL);
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
+mongoose.connect(url);
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
