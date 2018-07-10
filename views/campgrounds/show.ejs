@@ -100,36 +100,29 @@
      <p>
         <a class="btn btn-primary btn-large" href="/campgrounds">Back to results</a>
     </p>
-
+    
     <script>
+        // Initialize and add the map
         function initMap() {
-            var latlngCamp = new google.maps.LatLng(<%= campground.lat %>, <%= campground.long %>)
-            var options = { 
-                  zoom: 8, 
-                  center: latlngCamp, 
-                  mapTypeId: google.maps.MapTypeId.HYBRID,
-                  scrollwheel: false
-                  };
-            var contentString = "
-                <strong> <%= campground.name %></strong>
-                <p><%= campground.description %></p>
-                ";
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-            var map = new google.maps.Map( document.getElementById( "map" ) , options ) ;
-            //   var marker = new google.maps.Marker( { position: latlngHome , map: map , title:"You are here" } ) ;
-            var marker = new google.maps.Marker( { position: latlngCamp , map: map , title: "<%= campground.name %>" } ) ;
-            marker.addListener('click', () => {
-                infowindow.open(map, marker);
-            });
+          // The location of Uluru
+          var raceLocation = {lat: <%= campground.lat %>, lng: <%= campground.long %>};
+          // The map, centered at Uluru
+          var options = { zoom: 14, center: raceLocation, mapTypeId: google.maps.MapTypeId.HYBRID } ;
+          var map = new google.maps.Map(
+              document.getElementById('map'), options);
+          // The marker, positioned at Uluru
+          var marker = new google.maps.Marker({position: raceLocation, map: map});
         }
     </script>
-    
-    <script async defer src="https://maps.googleapis.com/maps/api/js?AIzaSyBllVM4jtkRVixy6S3Ow_FHlN3NvnR0BDE&callback=initMap"></script>
-   
-    
-<!--<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>-->
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBllVM4jtkRVixy6S3Ow_FHlN3NvnR0BDE&callback=initMap">
+    </script>
+
     
 
 
