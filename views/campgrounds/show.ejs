@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Geolocation Application</title>
 <!--<script src="geolocation.js"></script>-->
-<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+
 </head>
 
     <% var sum = 0, count = 0 %>
@@ -102,14 +102,31 @@
     </p>
 
     <script>
-          var latlngCamp = new google.maps.LatLng(<%= campground.lat %>, <%= campground.long %>)
-          var options = { zoom: 14, center: latlngCamp , mapTypeId: google.maps.MapTypeId.HYBRID } ;
-          var map = new google.maps.Map( document.getElementById( "map" ) , options ) ;
+        var latlngCamp = new google.maps.LatLng(<%= campground.lat %>, <%= campground.long %>)
+        var options = { 
+              zoom: 8, 
+              center: latlngCamp, 
+              mapTypeId: google.maps.MapTypeId.HYBRID,
+              scrollwheel: false
+              };
+        var contentString = "
+            <strong> <%= campground.name %></strong>
+            <p><%= campground.description %></p>
+            ";
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        var map = new google.maps.Map( document.getElementById( "map" ) , options ) ;
         //   var marker = new google.maps.Marker( { position: latlngHome , map: map , title:"You are here" } ) ;
-          var campsite = new google.maps.Marker( { position: latlngCamp , map: map , title: "<%= campground.name %>" } ) ;
+        var marker = new google.maps.Marker( { position: latlngCamp , map: map , title: "<%= campground.name %>" } ) ;
+        marker.addListener('click', () => {
+            infowindow.open(map, marker);
+        });
     </script>
     
-
+    <script src="https://maps.googleapis.com/maps/api/js?AIzaSyBllVM4jtkRVixy6S3Ow_FHlN3NvnR0BDE&callback=initMap"></script>
+    
+<!--<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>-->
     
 
 
