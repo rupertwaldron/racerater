@@ -6,8 +6,16 @@ var moment = require('moment');
 var Comment= require('../models/comment');
 var multer = require('multer');
 var cloudinary = require('cloudinary');
+var NodeGeocoder = require('node-geocoder');
 
+var options = {
+    provider: 'google',
+    httpAdapter: 'https',
+    api_key: process.env.GEOCODER_API_KEY,
+    formatter: null
+};
 
+var geocoder = NodeGeocoder(options);
 
 var storage = multer.diskStorage({
     filename: (req, file, callback) => {
