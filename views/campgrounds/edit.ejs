@@ -7,23 +7,38 @@
             
             <form action = "/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type = "text" name = "campground[name]" value= "<%=campground.name %>">
+                    <label for="name">Race Name</label>
+                    <input class="form-control" id="name" type = "text" name = "campground[name]" value= "<%=campground.name %>">
+                </div>
+                 <div class="form-group">
+                    <label for="organiser">Organiser</label>
+                    <input class="form-control" id="organiser" type = "text" name = "campground[organiser]" value= "<%=campground.organiser %>">
+                </div>
+                 <div class="form-group">
+                    <label for="website">Website</label>
+                    <input class="form-control" id="website" type = "text" name = "campground[website]" value= "<%=campground.website %>">
                 </div>
                 <div class="form-group">
-                     <label for="image">Image</label>
+                    <label for="image">Image</label>
                     <input class="form-control" type = "file" id="image" name = "image" accept="image/*" required value="<%= campground.image %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type = "number" name = "campground[price]" value = "<%=campground.price %>" min="0.01" step="0.01">
+                    <label for="price">Entry Fee</label>
+                    <input class="form-control" id="price" type = "number" name = "campground[price]" value = "<%=campground.price %>" min="0.01" step="0.01">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type = "text" name = "campground[lat]" value = "<%=campground.lat %>">
+                    <label for="location">Location</label>
+                    <input class="form-control" id = "location" type = "text" name = "campground[location]" value = "<%= campground.location %>">
                 </div>
+                <!--<div class="form-group">-->
+                <!--    <input class="form-control" type = "text" name = "campground[lat]" value = "<campground.lat %>">-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                <!--    <input class="form-control" type = "text" name = "campground[long]" value = "<campground.long %>">-->
+                <!--</div>-->
                 <div class="form-group">
-                    <input class="form-control" type = "text" name = "campground[long]" value = "<%=campground.long %>">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type = "text" name = "campground[description]" value = "<%=campground.description %>"><br>
+                    <label for="description">Race Description</label>
+                    <input class="form-control" id="description" type = "text" name = "campground[description]" value = "<%=campground.description %>"><br>
                 </div>
                  <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Submit</button>

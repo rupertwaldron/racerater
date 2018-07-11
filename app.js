@@ -1,3 +1,4 @@
+require('dotenv').config() //stores env vars
 var LocalStrategy   = require("passport-local"),
     Campground      = require("./models/campground"),
     bodyParser      = require("body-parser"),

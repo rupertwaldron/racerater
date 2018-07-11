@@ -113,22 +113,10 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, (req, res) => {
 
 //UPDATE CAMPGROUND ROUTE
 
-// router.put("/:id", middleware.checkCampgroundOwnership, (req, res) => {
-//     console.log("From the put: " + req.body.campground);
-//     Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, campground) => {
-//         if(err) {
-//             req.flash('error', err.message);
-//             res.redirect("/campgrounds");
-//         } else {
-//             req.flash('success', 'We just updated ' + campground.name + ' in the DB');
-//             res.redirect("/campgrounds/"+ req.params.id); 
-//         }
-//     });
-//     // campgrounds.push(newCamp);
-// });
 
+//router.put("/:id", middleware.checkCampgroundOwnership, upload.single('image'), (req, res) => {
 router.put("/:id", middleware.checkCampgroundOwnership, upload.single('image'), (req, res) => {
-    cloudinary.uploader.upload(req.file.path, (result) => {
+     cloudinary.uploader.upload(req.file.path, (result) => {
         // add cloudinary url for the image to the campground object under image property
         req.body.campground.image = result.secure_url;
         // add author to campground
@@ -145,7 +133,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, upload.single('image'), 
                 res.redirect("/campgrounds/"+ campground.id); 
             }
         });
-    });
+     });
 });
     
 // DESTROY CAMPGROUND ROUTE
