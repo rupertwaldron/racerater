@@ -5,6 +5,13 @@ var passport = require('passport');
 var middleware = require('../middleware');
 var multer = require('multer');
 var cloudinary = require('cloudinary');
+var Recaptcha = require('express-recaptcha').Recaptcha;
+var bodyParser = require("body-parser");
+
+var recaptcha = new Recaptcha(process.env.CAPTCHA_SITE_KEY, process.env.CAPTCHA_SECRET);
+
+router.use(bodyParser.json({extended: true}));
+router.use(bodyParser.urlencoded({extended: true}));
 
 var storage = multer.diskStorage({
     filename: (req, file, callback) => {
@@ -42,29 +49,35 @@ router.get('/register', (req, res) => {
 
 //handling user signup
 router.post('/register', (req, res) => {
-    // register will hash the password and return into the User object
-    var newUser = new User({
-        username: req.body.username,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        //avatar: 'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
-        email: req.body.email,
-    });
-    //eval(require('locus')); // stops at this point and checks variables
-    if(req.body.adminCode === process.env.SYSADMIN) {
-        newUser.isAdmin = true;
-    }
-    User.register(newUser, req.body.password, (err, user) => {
-        if(err) {
-            req.flash('error', "Registration Failure! " + err.message);
+     recaptcha.verify(req, (err, data) => {
+        if (err) {
+            req.flash('error', "Robot Failure " + err.message);
             return res.redirect('register')
-        } 
-        req.flash('success', "Welcome " + user.username);
-            //uses serialize from above and local as opposed to Facebook
-        passport.authenticate('local')(req, res, () => {
-            res.redirect('/campgrounds');
-        }); 
-    });
+        }
+    // register will hash the password and return into the User object
+        var newUser = new User({
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            //avatar: 'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
+            email: req.body.email,
+        });
+        //eval(require('locus')); // stops at this point and checks variables
+        if(req.body.adminCode === process.env.SYSADMIN) {
+            newUser.isAdmin = true;
+        }
+        User.register(newUser, req.body.password, (err, user) => {
+            if(err) {
+                req.flash('error', "Registration Failure! " + err.message);
+                return res.redirect('register')
+            } 
+            req.flash('success', "Welcome " + user.username);
+                //uses serialize from above and local as opposed to Facebook
+            passport.authenticate('local')(req, res, () => {
+                res.redirect('/campgrounds');
+            }); 
+        });
+     });
 });
 
 // LOGIN ROUTES

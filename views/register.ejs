@@ -1,4 +1,7 @@
 <% include ./partials/header %>
+<head>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
 
        <div id="newSiteForm" class="container">
             <h3 id="newSiteHeader">Sign Up!</h3>
@@ -13,6 +16,7 @@
                     <input class="form-control" type = "email" name = "email" placeholder = "email" required><br>
                     <input class="form-control" type = "text" name = "adminCode" placeholder = "admin code"><br>
                 </div>
+                <div class="g-recaptcha" data-sitekey="6Lc40GMUAAAAAPQhbGBHqiVgjVwbQPsoVHFSp4Vp"></div>
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
             </form>
             <br>
