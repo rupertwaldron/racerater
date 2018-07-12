@@ -176,6 +176,55 @@ router.put("/:id",middleware.checkCampgroundOwnership, (req, res) => {
 //      });
 // });
     
+//EDIT CAMPGROUND OWNER ROUTE
+router.get("/:id/owner",  (req, res) => {
+    Campground.findById(req.params.id, (err, campground) => {
+    //Campground.findById(req.params.id).populate("author").exec((err, foundCampground) => {
+        if(err) {
+            req.flash('error', err.message);
+        } else {
+            //res.send("This is the update owner route");
+            res.render("campgrounds/updateOwner", {campground: campground});
+        }
+    });
+});
+
+//UPDATE CAMPGROUND OWNER ROUTE
+
+router.put("/:id/owner", (req, res) => {
+    // find and update the correct campground
+    //eval(require('locus'));
+    Campground.findById(req.params.id, (err, foundCampground) => {
+        if(err){
+              req.flash('error', err.message);
+              res.redirect("/campgrounds");
+        }
+        Campground.findOne({'author.username': req.body.username}, (err, foundUser) => {
+           
+          if(err){
+              req.flash('error', err.message);
+              res.redirect("/campgrounds");
+          } else {
+              foundCampground.author = {
+                    id: foundUser.author.id,
+                    username: foundUser.author.username
+                }
+              //eval(require('locus'));
+              Campground.findByIdAndUpdate(req.params.id, foundCampground, (err, updatedCampground) => {
+                  if (err) {
+                    req.flash('error', err.message);
+                    res.redirect("/campgrounds");
+                  } else {
+                      req.flash('success', 'We just updated the owner of ' + updatedCampground.name+ ' with ' + foundUser.username);
+                      res.redirect("/campgrounds/" + req.params.id);
+                  }
+              });
+          }
+        });
+    })
+    
+});
+
 // DESTROY CAMPGROUND ROUTE
 router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
     Campground.findByIdAndRemove(req.params.id, (err, campground) => {
