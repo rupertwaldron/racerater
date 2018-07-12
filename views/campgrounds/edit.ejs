@@ -5,7 +5,7 @@
         <div id="newSiteForm" class="container">
             <h1 id="newSiteHeader">Edit <%= campground.name %></h1>
             
-            <form action = "/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <form action = "/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
                 <div class="form-group">
                     <label for="name">Race Name</label>
                     <input class="form-control" id="name" type = "text" name = "campground[name]" value= "<%=campground.name %>">
@@ -18,10 +18,10 @@
                     <label for="website">Website</label>
                     <input class="form-control" id="website" type = "text" name = "campground[website]" value= "<%=campground.website %>">
                 </div>
-                <div class="form-group">
-                    <label for="image">Image</label>
-                    <input class="form-control" type = "file" id="image" name = "image" accept="image/*" required value="<%= campground.image %>">
-                </div>
+                <!--<div class="form-group">-->
+                <!--    <label for="image">Image</label>-->
+                <!--    <input class="form-control" type = "file" id="image" name = "image" accept="image/*" required value="<%= campground.image %>">-->
+                <!--</div>-->
                 <div class="form-group">
                     <label for="price">Entry Fee</label>
                     <input class="form-control" id="price" type = "number" name = "campground[price]" value = "<%=campground.price %>" min="0.01" step="0.01">
