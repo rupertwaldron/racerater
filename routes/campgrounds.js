@@ -123,7 +123,7 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, (req, res) => {
 
 router.put("/:id",middleware.checkCampgroundOwnership, (req, res) => {
     // find and update the correct campground
-    eval(require('locus'));
+    //eval(require('locus'));
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
        if(err){
            req.flash('error', err.message);
