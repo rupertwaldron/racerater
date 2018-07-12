@@ -83,6 +83,16 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), (req, res) => {
             id: req.user._id,
             username: req.user.username
         }
+        geocoder.geocode(req.body.campground.location, (err, data) => {
+            if (err || !data.length) {
+                req.flash('error', 'Invalide adddress');
+                return res.redirect('back');
+            }
+            req.body.campground.lat = data[0].latitude;
+            req.body.campground.long = data[0].longitude;
+            req.body.campground.location = data[0].formattedAddress;
+        });
+        //eval(require('locus'));
         Campground.create(req.body.campground, (err, campground) => {
             if(err) {
                 req.flash('error', err.message);
@@ -124,15 +134,24 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, (req, res) => {
 router.put("/:id",middleware.checkCampgroundOwnership, (req, res) => {
     // find and update the correct campground
     //eval(require('locus'));
-    Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
-       if(err){
-           req.flash('error', err.message);
-           res.redirect("/campgrounds");
-       } else {
-           //redirect somewhere(show page)
-           req.flash('success', 'We just updated ' + updatedCampground.name + ' in the DB');
-           res.redirect("/campgrounds/" + req.params.id);
-       }
+     geocoder.geocode(req.body.campground.location, (err, data) => {
+        if (err || !data.length) {
+            req.flash('error', 'Invalide adddress');
+            return res.redirect('back');
+        }
+        req.body.campground.lat = data[0].latitude;
+        req.body.campground.long = data[0].longitude;
+        req.body.campground.location = data[0].formattedAddress;
+        Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
+           if(err){
+               req.flash('error', err.message);
+               res.redirect("/campgrounds");
+           } else {
+               //redirect somewhere(show page)
+               req.flash('success', 'We just updated ' + updatedCampground.name + ' in the DB');
+               res.redirect("/campgrounds/" + req.params.id);
+           }
+        });
     });
 });
 
