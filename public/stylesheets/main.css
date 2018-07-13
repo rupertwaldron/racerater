@@ -122,3 +122,8 @@ nav {
     top:2px;
     left:2px;
 }
+
+.btn-info {
+    background-color: purple;
+    border-color: purple;
+}
