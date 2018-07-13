@@ -177,7 +177,7 @@ router.put("/:id",middleware.checkCampgroundOwnership, (req, res) => {
 // });
     
 //EDIT CAMPGROUND OWNER ROUTE
-router.get("/:id/owner",  (req, res) => {
+router.get("/:id/owner", middleware.checkSysAdmin, (req, res) => {
     Campground.findById(req.params.id, (err, campground) => {
     //Campground.findById(req.params.id).populate("author").exec((err, foundCampground) => {
         if(err) {
@@ -191,7 +191,7 @@ router.get("/:id/owner",  (req, res) => {
 
 //UPDATE CAMPGROUND OWNER ROUTE
 
-router.put("/:id/owner", (req, res) => {
+router.put("/:id/owner", middleware.checkSysAdmin, (req, res) => {
     // find and update the correct campground
     //eval(require('locus'));
     Campground.findById(req.params.id, (err, foundCampground) => {

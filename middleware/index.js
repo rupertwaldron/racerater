@@ -87,6 +87,21 @@ middlewareObj.checkUserOwnership = function(req, res, next) {
     }
 }
 
+middlewareObj.checkSysAdmin = function(req, res, next) {
+   if(req.isAuthenticated()) { // check if user is logged in
+        if(req.user.isAdmin) {
+            req.flash('success', "Sys Admin Authorization Accepted!");
+            next(); //next means it will go onto the callback
+        } else {
+            req.flash('error', "Sys Admin Authorization Denied! ");
+            res.redirect('back');
+        }
+    } else {
+        req.flash('error', "Authorization Denied! ");
+        res.redirect('back'); //takes user back to previous page
+    }
+}
+
 middlewareObj.isLoggedIn = function(req, res, next) {
     console.log('Is logged in called');
     if(req.isAuthenticated()) {
