@@ -4,6 +4,7 @@ var Campground = require('../models/campground');
 var middleware = require('../middleware'); //will automatically grap the index.js file
 var moment = require('moment');
 var Comment= require('../models/comment');
+var User = require('../models/user');
 var multer = require('multer');
 var cloudinary = require('cloudinary');
 var NodeGeocoder = require('node-geocoder');
@@ -199,14 +200,14 @@ router.put("/:id/owner", middleware.checkSysAdmin, (req, res) => {
               req.flash('error', "can't find campground");
               res.redirect("/campgrounds");
         } else {
-            Campground.findOne({'author.username': req.body.username}, (err, foundUser) => {
+            User.findOne({username: req.body.username}, (err, foundUser) => {
                 if(err || !foundUser){
                     req.flash('error', "Couldn't find user");
                     res.redirect("/campgrounds");
                 } else {
                     foundCampground.author = {
-                        id: foundUser.author.id,
-                        username: foundUser.author.username
+                        id: foundUser._id,
+                        username: foundUser.username
                     }
                     //eval(require('locus'));
                     Campground.findByIdAndUpdate(req.params.id, foundCampground, (err, updatedCampground) => {
@@ -224,6 +225,39 @@ router.put("/:id/owner", middleware.checkSysAdmin, (req, res) => {
     })
 });
 
+
+// router.put("/:id/owner", middleware.checkSysAdmin, (req, res) => {
+//     // find and update the correct campground
+//     //eval(require('locus'));
+//     Campground.findById(req.params.id, (err, foundCampground) => {
+//         if(err || !foundCampground){
+//               req.flash('error', "can't find campground");
+//               res.redirect("/campgrounds");
+//         } else {
+//             Campground.findOne({'author.username': req.body.username}, (err, foundUser) => {
+//                 if(err || !foundUser){
+//                     req.flash('error', "Couldn't find user");
+//                     res.redirect("/campgrounds");
+//                 } else {
+//                     foundCampground.author = {
+//                         id: foundUser.author.id,
+//                         username: foundUser.author.username
+//                     }
+//                     //eval(require('locus'));
+//                     Campground.findByIdAndUpdate(req.params.id, foundCampground, (err, updatedCampground) => {
+//                         if (err || !updatedCampground) {
+//                             req.flash('error', "Error updating campground");
+//                             res.redirect("/campgrounds");
+//                         } else {
+//                             req.flash('success', 'We just updated the owner of ' + updatedCampground.name+ ' with ' + foundUser.username);
+//                             res.redirect("/campgrounds/" + req.params.id);
+//                         } 
+//                     });
+//                 }
+//             });
+//         }
+//     })
+// });
 // DESTROY CAMPGROUND ROUTE
 router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
     Campground.findByIdAndRemove(req.params.id, (err, campground) => {
