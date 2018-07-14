@@ -201,7 +201,7 @@ router.put("/:id/owner", middleware.checkSysAdmin, (req, res) => {
         } else {
             Campground.findOne({'author.username': req.body.username}, (err, foundUser) => {
                 if(err || !foundUser){
-                    req.flash('error', "Couldn't find user");
+                    req.flash('error', "Couldn't find user: " + req.body.username);
                     res.redirect("/campgrounds");
                 } else {
                     foundCampground.author = {
