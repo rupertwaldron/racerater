@@ -195,34 +195,33 @@ router.put("/:id/owner", middleware.checkSysAdmin, (req, res) => {
     // find and update the correct campground
     //eval(require('locus'));
     Campground.findById(req.params.id, (err, foundCampground) => {
-        if(err){
-              req.flash('error', err.message);
+        if(err || !foundCampground){
+              req.flash('error', "can't find campground");
               res.redirect("/campgrounds");
-        }
-        Campground.findOne({'author.username': req.body.username}, (err, foundUser) => {
-           
-          if(err){
-              req.flash('error', err.message);
-              res.redirect("/campgrounds");
-          } else {
-              foundCampground.author = {
-                    id: foundUser.author.id,
-                    username: foundUser.author.username
-                }
-              //eval(require('locus'));
-              Campground.findByIdAndUpdate(req.params.id, foundCampground, (err, updatedCampground) => {
-                  if (err) {
-                    req.flash('error', err.message);
+        } else {
+            Campground.findOne({'author.username': req.body.username}, (err, foundUser) => {
+                if(err || !foundUser){
+                    req.flash('error', "Couldn't find user");
                     res.redirect("/campgrounds");
-                  } else {
-                      req.flash('success', 'We just updated the owner of ' + updatedCampground.name+ ' with ' + foundUser.username);
-                      res.redirect("/campgrounds/" + req.params.id);
-                  }
-              });
-          }
-        });
+                } else {
+                    foundCampground.author = {
+                        id: foundUser.author.id,
+                        username: foundUser.author.username
+                    }
+                    //eval(require('locus'));
+                    Campground.findByIdAndUpdate(req.params.id, foundCampground, (err, updatedCampground) => {
+                        if (err || !updatedCampground) {
+                            req.flash('error', "Error updating campground");
+                            res.redirect("/campgrounds");
+                        } else {
+                            req.flash('success', 'We just updated the owner of ' + updatedCampground.name+ ' with ' + foundUser.username);
+                            res.redirect("/campgrounds/" + req.params.id);
+                        } 
+                    });
+                }
+            });
+        }
     })
-    
 });
 
 // DESTROY CAMPGROUND ROUTE
