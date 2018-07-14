@@ -24,9 +24,9 @@
                 <li class="list-group-item">Organiser
                     <p><%= campground.organiser %></p>
                 </li>
-                <li class="list-group-item">Website
+                <li class="list-group-item">
                     <p>
-                        <a target="_blank" rel="noopener noreferrer" href="https://<%= campground.website %>"><%= campground.website %></a>
+                        <a target="_blank" rel="noopener noreferrer" href="https://<%= campground.website %>">Website</a>
                     </p>
                     
                 </li>
@@ -62,6 +62,7 @@
                                         <a class="btn btn-info" href="/campgrounds/<%= campground._id %>/owner">Change Owner</a>
                                     <% } %>
                                     <button  type="submit" class="btn btn-danger">Delete</button>
+                                    <a class="btn btn-info" href="mailto:rupert.waldron@yahoo.co.uk?Subject=Change User%20from%20<%= currentUser.username %>" target="_top">Request Race Owner Change</a>
                                 </form>
                             </p>
                         <% } %>

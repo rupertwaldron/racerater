@@ -1,0 +1,25 @@
+<% include ../partials/header %>
+
+       <div id="newSiteForm" class="container">
+            <h3 id="newSiteHeader">Update Image for: <%= user.username %> </h3>
+            
+            <form action = "/users/<%= user._id %>/image?_method=PUT" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <img style="width:450px;height:100%" src="<%= user.avatar %>" alt="user profile image">
+                    <!--<label for="image">Update Image</label>-->
+                    <input class="form-control" type = "file" id="image" name = "image" accept="image/*" value="<%= user.avatar %>">
+                    <!--<input class="form-control" type = "url" name = "user[avatar]" value = "" required><br>-->
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update</button>
+            </form>
+            <br>
+            <a href="/users/<%= user._id %>">Go Back</a>
+        </div>
+        
+        <!--<form action="/register" method="POST">-->
+        <!--    <input type="text" name="username" placeholder="username" required>-->
+        <!--    <input type="password" name="password" placeholder="password" required>-->
+        <!--    <button type="submit">Register</button>-->
+        <!--</form>-->
+
+<% include ../partials/footer %>

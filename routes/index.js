@@ -133,13 +133,47 @@ router.get("/users/:id/edit", middleware.checkUserOwnership, (req, res) => {
 
 //UPDATE USER ROUTE
 
-router.put("/users/:id", middleware.checkUserOwnership, upload.single('image'), (req, res) => {
+router.put("/users/:id", middleware.checkUserOwnership, (req, res) => {
+    User.findByIdAndUpdate(req.params.id, req.body.user, (err, updatedUser) => {
+        if(err || !updatedUser) {
+            req.flash('error', "Can't find user");
+            res.redirect("/users" + req.params.id);
+        } else {
+            req.flash('success', 'We just updated ' + updatedUser.username + ' in the DB');
+            res.redirect("/users/" + req.params.id); 
+        }
+    });
+});
+
+//EDIT USER IMAGE ROUTE
+router.get("/users/:id/image", middleware.checkUserOwnership, (req, res) => {
+    // Check which user is logged in
+    // Update user
+    // Render the show user page
+    User.findById(req.params.id, (err, foundUser) => {
+        if(err || !foundUser) {
+            req.flash('error', "Can't find user");
+            res.redirect("/");
+        } else {
+            res.render('users/editUserImage', {user: foundUser});
+        }
+    });
+    //res.send('This is the edit user route')
+});
+
+//UPDATE USER IMAGE ROUTE
+
+router.put("/users/:id/image", middleware.checkUserOwnership, upload.single('image'), (req, res) => {
     cloudinary.uploader.upload(req.file.path, (result) => {
         // add cloudinary url for the image to the campground object under image property
-        req.body.user.avatar = result.secure_url;
         //eval(require('locus'))
-    
-        User.findByIdAndUpdate(req.params.id, req.body.user, (err, updatedUser) => {
+        
+        var newUser = {
+            avatar: result.secure_url
+        }
+        
+        
+        User.findByIdAndUpdate(req.params.id, newUser, (err, updatedUser) => {
             if(err || !updatedUser) {
                 req.flash('error', "Can't find user");
                 res.redirect("/users" + req.params.id);
@@ -150,7 +184,5 @@ router.put("/users/:id", middleware.checkUserOwnership, upload.single('image'), 
         });
     });
 });
-
-
 
 module.exports = router;
