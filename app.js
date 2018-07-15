@@ -35,7 +35,7 @@ app.use(flash()); //needs to be before passport
 
 //PASPORT CONFIG
 app.use(require('express-session') ({
-    secret: "This is my secret key phrase",
+    secret: process.env.SECRET_PHRASE,
     resave: false,
     saveUninitialized: false
 }));
