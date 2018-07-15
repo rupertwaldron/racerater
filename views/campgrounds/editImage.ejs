@@ -1,0 +1,24 @@
+<% include ../partials/header %>
+
+
+
+        <div id="newSiteForm" class="container">
+            <h1 id="newSiteHeader">Update Race Image <%= campground.name %></h1>
+            
+            <form action = "/campgrounds/<%= campground._id %>/image?_method=PUT" method="POST" enctype="multipart/form-data">
+               
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input class="form-control" type = "file" id="image" name = "image" accept="image/*" required value="<%= campground.image %>">
+                </div>
+                 <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </div>  
+            </form>
+            <br>
+            <a href="/campgrounds">Go Back</a>
+        </div>
+
+
+
+<% include ../partials/footer %>

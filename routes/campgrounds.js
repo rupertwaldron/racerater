@@ -156,26 +156,37 @@ router.put("/:id",middleware.checkCampgroundOwnership, (req, res) => {
     });
 });
 
-// router.put("/:id", middleware.checkCampgroundOwnership, upload.single('image'), (req, res) => {
-//      cloudinary.uploader.upload(req.file.path, (result) => {
-//         // add cloudinary url for the image to the campground object under image property
-//         req.body.campground.image = result.secure_url;
-//         // add author to campground
-//         req.body.campground.author = {
-//             id: req.user._id,
-//             username: req.user.username
-//         }
-//         Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, campground) => {
-//             if(err) {
-//                 req.flash('error', err.message);
-//                 res.redirect("/campgrounds");
-//             } else {
-//                 req.flash('success', 'We just updated ' + campground.name + ' in the DB');
-//                 res.redirect("/campgrounds/"+ campground.id); 
-//             }
-//         });
-//      });
-// });
+//EDIT CAMPGROUND IMAGE ROUTE
+router.get("/:id/image", middleware.checkCampgroundOwnership, (req, res) => {
+    Campground.findById(req.params.id, (err, campground) => {
+        if(err) {
+            req.flash('error', err.message);
+        } else {
+            res.render("campgrounds/editImage", {campground: campground});
+        }
+    });
+});
+
+//UPDATE CAMPGROUND IMAGE ROUTE
+router.put("/:id/image", middleware.checkCampgroundOwnership, upload.single('image'), (req, res) => {
+     cloudinary.uploader.upload(req.file.path, (result) => {
+        // add cloudinary url for the image to the campground object under image property
+        // add author to campground
+        var newCampground = {
+            image: result.secure_url
+        }
+
+        Campground.findByIdAndUpdate(req.params.id, newCampground, (err, campground) => {
+            if(err) {
+                req.flash('error', err.message);
+                res.redirect("/campgrounds");
+            } else {
+                req.flash('success', 'We just updated ' + campground.name + ' in the DB');
+                res.redirect("/campgrounds/"+ campground.id); 
+            }
+        });
+     });
+});
     
 //EDIT CAMPGROUND OWNER ROUTE
 router.get("/:id/owner", middleware.checkSysAdmin, (req, res) => {

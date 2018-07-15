@@ -2,6 +2,11 @@
 /*    background-color: pink;*/
 /*}*/
 
+#race {
+    font-family: 'Knewave', cursive;
+    color: orange;
+}
+
 .card img {
     width: 100%;
 }

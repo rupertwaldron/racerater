@@ -18,6 +18,11 @@
                     <label for="website">Website</label>
                     <input class="form-control" id="website" type = "text" name = "campground[website]" value= "<%=campground.website %>">
                 </div>
+                <div class="form-group">
+                    <a href="/campgrounds/<%= campground._id %>/image"> 
+                        <img style="width:450px;height:100%" src="<%= campground.image %>" alt="Update Image" >
+                    </a>
+                </div>
                 <!--<div class="form-group">-->
                 <!--    <label for="image">Image</label>-->
                 <!--    <input class="form-control" type = "file" id="image" name = "image" accept="image/*" required value="<%= campground.image %>">-->
@@ -30,12 +35,6 @@
                     <label for="location">Location</label>
                     <input class="form-control" id = "location" type = "text" name = "campground[location]" value = "<%= campground.location %>">
                 </div>
-                <!--<div class="form-group">-->
-                <!--    <input class="form-control" type = "text" name = "campground[lat]" value = "<campground.lat %>">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                <!--    <input class="form-control" type = "text" name = "campground[long]" value = "<campground.long %>">-->
-                <!--</div>-->
                 <div class="form-group">
                     <label for="description">Race Description</label>
                     <input class="form-control" id="description" type = "text" name = "campground[description]" value = "<%=campground.description %>"><br>

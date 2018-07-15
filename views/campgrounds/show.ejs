@@ -19,18 +19,19 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">Rate the <em>Race</em></p>
+            <p class="lead">Rate the <em id="race">Race</em></p>
             <div class="list-group">
-                <li class="list-group-item">Organiser
+                <li class="list-group-item">Organiser:
                     <p><%= campground.organiser %></p>
                 </li>
                 <li class="list-group-item">
                     <p>
                         <a target="_blank" rel="noopener noreferrer" href="https://<%= campground.website %>">Website</a>
                     </p>
-                    
                 </li>
-                <!--<li class="list-group-item">Info 3</li>-->
+                <li class="list-group-item">Address:
+                    <p><%= campground.location %></p>
+                </li>
             </div>
             <div id="map"> </div>
         </div>
