@@ -137,7 +137,7 @@ router.put("/:id",middleware.checkCampgroundOwnership, (req, res) => {
     //eval(require('locus'));
      geocoder.geocode(req.body.campground.location, (err, data) => {
         if (err || !data.length) {
-            req.flash('error', 'Invalide adddress');
+            req.flash('error', 'Invalid adddress');
             return res.redirect('back');
         }
         req.body.campground.lat = data[0].latitude;

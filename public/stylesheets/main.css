@@ -7,6 +7,12 @@
     color: orange;
 }
 
+.txtBox {
+    height: 400px;
+    width: 100%;
+    text-align: left;
+}
+
 .card img {
     width: 100%;
 }
