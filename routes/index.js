@@ -100,6 +100,11 @@ router.get('/logout', (req, res) => {
     res.redirect("/campgrounds");
 });
 
+//ABOUT ROUTES
+router.get("/about", (req, res) => {
+    res.render('about');
+});
+
 //SHOW USER PROFILE ROUTE
 router.get("/users/:id", (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
