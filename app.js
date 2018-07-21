@@ -12,6 +12,9 @@ var LocalStrategy   = require("passport-local"),
     flash           = require("connect-flash"),
     User            = require("./models/user");
     
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+    
 // requiring routes
 var commentRoutes       = require("./routes/comments");
 var campgroundRoutes    = require("./routes/campgrounds");
@@ -24,8 +27,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // production database
 //mongoose.connect("mongodb://rupert:spiral8@ds131721.mlab.com:31721/racerater");
-var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
 mongoose.connect(url);
+
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
@@ -34,10 +38,13 @@ app.use(flash()); //needs to be before passport
 
 
 //PASPORT CONFIG
-app.use(require('express-session') ({
+app.use(session ({
     secret: process.env.SECRET_PHRASE,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    })
 }));
 
 app.use(passport.initialize());
