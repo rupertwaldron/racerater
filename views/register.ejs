@@ -8,13 +8,29 @@
             
             <form action = "/register" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type = "text" name = "username" placeholder = "username" required><br>
-                    <input class="form-control" type = "password" name = "password" placeholder = "password" required><br>
-                    <input class="form-control" type = "text" name = "firstName" placeholder = "first Name" required><br>
-                    <input class="form-control" type = "text" name = "lastName" placeholder = "last name" required><br>
+                    <label for="username">Username</label>
+                    <input class="form-control" id = "username" type = "text" name = "username" placeholder = "username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" id = "password" type = "password" name = "password" placeholder = "password" required>
+                </div>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input class="form-control" id = "firstName" type = "text" name = "firstName" placeholder = "first Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input class="form-control" id = "lastName" type = "text" name = "lastName" placeholder = "last name" required>
+                </div>
                     <!--<input class="form-control" type = "url" name = "avatar" placeholder = "avatar url" required><br>-->
-                    <input class="form-control" type = "email" name = "email" placeholder = "email" required><br>
-                    <input class="form-control" type = "text" name = "adminCode" placeholder = "admin code"><br>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input class="form-control" id = "email" type = "email" name = "email" placeholder = "email" required>
+                </div>
+                 <div class="form-group">
+                    <label for="adminCode">Enter Admin Code if you have one, otherwise leave blank.</label>
+                    <input class="form-control" id = "adminCode" type = "text" name = "adminCode" placeholder = "admin code or blank"><br>
                 </div>
                 <div class="g-recaptcha" data-sitekey="6Lc40GMUAAAAAPQhbGBHqiVgjVwbQPsoVHFSp4Vp"></div>
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
